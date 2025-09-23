@@ -1,0 +1,355 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 全局样式 */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #f5f5f5;
+  overflow-x: hidden; /* 防止横向滚动条 */
+  position: relative; /* 确保固定定位的基准 */
+}
+
+#root {
+  height: 100%;
+  overflow-x: hidden; /* 只禁止横向滚动 */
+  position: relative; /* 确保固定定位的基准 */
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* 动画类 */
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.slide-up {
+  animation: slideUp 0.3s ease-out;
+}
+
+.bounce-in {
+  animation: bounceIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* 卡片悬停效果 */
+.card-hover {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* 渐变背景 */
+.gradient-bg {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.gradient-bg-blue {
+  background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%);
+}
+
+.gradient-bg-green {
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+}
+
+.gradient-bg-purple {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+}
+
+/* 文本渐变 */
+.text-gradient {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* 玻璃态效果 */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* 加载状态 */
+.loading-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .mobile-hidden {
+    display: none !important;
+  }
+}
+
+/* 自定义 Ant Design 组件样式 */
+.ant-layout-sider-collapsed .ant-menu-item-icon {
+  font-size: 16px;
+}
+
+.ant-menu-dark .ant-menu-item-selected {
+  background-color: #1890ff !important;
+}
+
+/* 代码编辑器样式 */
+.monaco-editor {
+  border-radius: 8px;
+}
+
+/* 测试结果状态颜色 */
+.status-success {
+  color: #22c55e;
+  background-color: #f0fdf4;
+  border-color: #bbf7d0;
+}
+
+.status-failed {
+  color: #ef4444;
+  background-color: #fef2f2;
+  border-color: #fecaca;
+}
+
+.status-pending {
+  color: #f59e0b;
+  background-color: #fffbeb;
+  border-color: #fde68a;
+}
+
+.status-running {
+  color: #0ea5e9;
+  background-color: #f0f9ff;
+  border-color: #bae6fd;
+}
+
+/* 页面标题统一样式 */
+.page-header {
+  margin-bottom: 2rem;
+}
+
+.page-header .ant-typography-title {
+  color: #1f2937 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.page-header .ant-typography {
+  color: #6b7280 !important;
+  font-size: 1rem !important;
+}
+
+/* 卡片阴影优化 */
+.ant-card {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06) !important;
+  border: 1px solid #e5e7eb !important;
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.ant-card:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* 按钮样式优化 */
+.ant-btn-lg {
+  height: 40px !important;
+  padding: 0 20px !important;
+  font-size: 14px !important;
+  border-radius: 6px !important;
+}
+
+/* 表格样式优化 */
+.ant-table-thead > tr > th {
+  background-color: #f9fafb !important;
+  color: #374151 !important;
+  font-weight: 600 !important;
+  border-bottom: 2px solid #e5e7eb !important;
+}
+
+.ant-table-tbody > tr:hover > td {
+  background-color: #f8fafc !important;
+}
+
+/* 侧边栏菜单优化 */
+.ant-menu-dark .ant-menu-item:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  transition: background-color 0.2s ease;
+}
+
+/* 侧边栏完全固定 */
+.ant-layout-sider {
+  position: fixed !important;
+  left: 0 !important;
+  top: 0 !important;
+  height: 100vh !important;
+  overflow: hidden !important;
+  z-index: 1000 !important;
+}
+
+/* 侧边栏菜单不允许滚动 */
+.ant-layout-sider .ant-menu {
+  height: 100% !important;
+  overflow: hidden !important;
+}
+
+/* 主内容区域独立滚动 */
+.ant-layout-content {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+/* 确保页面内容有合理的间距 */
+.ant-layout-content > div {
+  min-height: 100%;
+}
+
+/* 页面加载动画优化 */
+.ant-spin-container {
+  transition: opacity 0.3s ease;
+}
+
+/* 表格响应式优化 */
+.ant-table-wrapper {
+  overflow-x: auto;
+}
+
+/* 卡片阴影优化 */
+.ant-card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.3s ease;
+}
+
+.ant-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* 按钮组优化 */
+.ant-btn-group .ant-btn {
+  border-radius: 6px !important;
+}
+
+.ant-btn-group .ant-btn:not(:first-child) {
+  margin-left: 8px;
+}
+
+/* 输入框优化 */
+.ant-input:focus,
+.ant-input-focused {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1) !important;
+}
+
+/* 选择器优化 */
+.ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+  border-color: #3b82f6 !important;
+}
+
+.ant-select-focused .ant-select-selector {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1) !important;
+}
+
+/* 响应式优化 */
+@media (max-width: 768px) {
+  .page-header {
+    margin-bottom: 1rem;
+  }
+
+  .page-header .ant-typography-title {
+    font-size: 1.5rem !important;
+  }
+
+  .ant-btn-lg {
+    height: 36px !important;
+    padding: 0 16px !important;
+    font-size: 13px !important;
+  }
+
+  .ant-card {
+    margin-bottom: 1rem;
+  }
+
+  /* 移动端侧边栏优化 */
+  .ant-layout-sider {
+    width: 64px !important;
+  }
+
+  /* 移动端主内容区域调整 */
+  .ant-layout-content {
+    padding: 8px !important;
+  }
+}
