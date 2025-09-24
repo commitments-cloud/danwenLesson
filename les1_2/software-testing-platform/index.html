@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能测试平台 - 软件质量管理系统</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 侧边导航栏 -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-flask"></i>
+                <span>智能测试平台</span>
+            </div>
+            <button class="toggle-btn" id="toggleBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <div class="sidebar-menu">
+            <ul class="menu-list">
+                <li class="menu-item active">
+                    <a href="#dashboard" class="menu-link" data-page="dashboard">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>仪表盘</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#test-plans" class="menu-link" data-page="test-plans">
+                        <i class="fas fa-project-diagram"></i>
+                        <span>测试计划</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#test-cases" class="menu-link" data-page="test-cases">
+                        <i class="fas fa-list-check"></i>
+                        <span>测试用例</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#test-execution" class="menu-link" data-page="test-execution">
+                        <i class="fas fa-play"></i>
+                        <span>测试执行</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#defects" class="menu-link" data-page="defects">
+                        <i class="fas fa-bug"></i>
+                        <span>缺陷管理</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#reports" class="menu-link" data-page="reports">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>测试报告</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#automation" class="menu-link" data-page="automation">
+                        <i class="fas fa-robot"></i>
+                        <span>自动化测试</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#performance" class="menu-link" data-page="performance">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>性能测试</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#security" class="menu-link" data-page="security">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>安全测试</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#api-testing" class="menu-link" data-page="api-testing">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>API测试</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#test-data" class="menu-link" data-page="test-data">
+                        <i class="fas fa-database"></i>
+                        <span>测试数据</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#settings" class="menu-link" data-page="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>系统设置</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="user-details">
+                    <span class="user-name">测试工程师</span>
+                    <span class="user-role">管理员</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容区域 -->
+    <main class="main-content" id="mainContent">
+        <!-- 顶部导航栏 -->
+        <header class="top-navbar">
+            <div class="navbar-left">
+                <h1 class="page-title" id="pageTitle">仪表盘</h1>
+                <div class="breadcrumb">
+                    <span class="breadcrumb-item active" id="breadcrumbItem">首页 / 仪表盘</span>
+                </div>
+            </div>
+            <div class="navbar-right">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="搜索测试用例、缺陷..." id="globalSearch">
+                </div>
+                <div class="notification-icon">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </div>
+                <div class="user-menu">
+                    <img src="https://via.placeholder.com/32" alt="用户头像" class="user-avatar-small">
+                </div>
+            </div>
+        </header>
+
+        <!-- 页面内容容器 -->
+        <div class="content-wrapper" id="contentWrapper">
+            <!-- 仪表盘页面 -->
+            <div class="page-content" id="dashboard-page">
+                <!-- 这里将被JavaScript动态填充内容 -->
+            </div>
+
+            <!-- 测试计划页面 -->
+            <div class="page-content hidden" id="test-plans-page">
+                <!-- 测试计划内容 -->
+            </div>
+
+            <!-- 测试用例页面 -->
+            <div class="page-content hidden" id="test-cases-page">
+                <!-- 测试用例内容 -->
+            </div>
+
+            <!-- 测试执行页面 -->
+            <div class="page-content hidden" id="test-execution-page">
+                <!-- 测试执行内容 -->
+            </div>
+
+            <!-- 缺陷管理页面 -->
+            <div class="page-content hidden" id="defects-page">
+                <!-- 缺陷管理内容 -->
+            </div>
+
+            <!-- 测试报告页面 -->
+            <div class="page-content hidden" id="reports-page">
+                <!-- 测试报告内容 -->
+            </div>
+
+            <!-- 自动化测试页面 -->
+            <div class="page-content hidden" id="automation-page">
+                <!-- 自动化测试内容 -->
+            </div>
+
+            <!-- 性能测试页面 -->
+            <div class="page-content hidden" id="performance-page">
+                <!-- 性能测试内容 -->
+            </div>
+
+            <!-- 安全测试页面 -->
+            <div class="page-content hidden" id="security-page">
+                <!-- 安全测试内容 -->
+            </div>
+
+            <!-- API测试页面 -->
+            <div class="page-content hidden" id="api-testing-page">
+                <!-- API测试内容 -->
+            </div>
+
+            <!-- 测试数据页面 -->
+            <div class="page-content hidden" id="test-data-page">
+                <!-- 测试数据内容 -->
+            </div>
+
+            <!-- 系统设置页面 -->
+            <div class="page-content hidden" id="settings-page">
+                <!-- 系统设置内容 -->
+            </div>
+        </div>
+    </main>
+
+    <!-- 模态框容器 -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-container" id="modalContainer">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">标题</h3>
+                <button class="modal-close" id="modalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- 模态框内容 -->
+            </div>
+            <div class="modal-footer" id="modalFooter">
+                <button class="btn btn-secondary" id="modalCancel">取消</button>
+                <button class="btn btn-primary" id="modalConfirm">确认</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 加载中覆盖层 -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>加载中...</p>
+        </div>
+    </div>
+
+    <!-- JavaScript库 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="js/mockData.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/testPlan.js"></script>
+    <script src="js/testCase.js"></script>
+    <script src="js/defectManagement.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/pageInitializer.js"></script>
+</body>
+</html>
