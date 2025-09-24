@@ -1,0 +1,140 @@
+.chat-input-container {
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.chat-input-wrapper {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.chat-textarea {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 12px !important;
+  color: white !important;
+  font-size: 14px;
+  line-height: 1.5;
+  resize: none;
+}
+
+.chat-textarea:hover {
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.chat-textarea:focus {
+  border-color: #1677ff !important;
+  box-shadow: 0 0 0 2px rgba(22, 119, 255, 0.2) !important;
+}
+
+.chat-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.chat-input-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.send-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: #1677ff;
+  color: white;
+  transition: all 0.2s;
+}
+
+.send-button:hover:not(:disabled) {
+  background: #4096ff;
+  transform: scale(1.05);
+}
+
+.send-button:disabled {
+  background: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.4);
+  cursor: not-allowed;
+}
+
+.stop-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: #ff4d4f;
+  color: white;
+  transition: all 0.2s;
+}
+
+.stop-button:hover {
+  background: #ff7875;
+  transform: scale(1.05);
+}
+
+.chat-input-status {
+  margin-top: 8px;
+  text-align: center;
+}
+
+.status-text {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-text::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #1677ff;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .chat-input-container {
+    padding: 12px;
+  }
+  
+  .chat-input-wrapper {
+    gap: 8px;
+  }
+  
+  .send-button,
+  .stop-button {
+    width: 36px;
+    height: 36px;
+  }
+}
