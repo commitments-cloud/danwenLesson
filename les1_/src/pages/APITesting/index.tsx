@@ -37,7 +37,7 @@ import LoadingSpinner from '@components/Common/LoadingSpinner'
 const { Title, Text } = Typography
 const { TextArea } = Input
 const { Option } = Select
-const { TabPane } = Tabs
+
 const { Panel } = Collapse
 
 const APITesting: React.FC = () => {
@@ -280,38 +280,51 @@ const APITesting: React.FC = () => {
                 </div>
 
                 {/* 详细配置标签页 */}
-                <Tabs defaultActiveKey="headers">
-                  <TabPane tab="请求头" key="headers">
-                    <Form.Item name="headers">
-                      <Input.TextArea
-                        rows={8}
-                        placeholder="请求头 (JSON格式)"
-                        defaultValue={JSON.stringify(currentTest.headers || {}, null, 2)}
-                        style={{ fontFamily: 'monospace' }}
-                      />
-                    </Form.Item>
-                  </TabPane>
-
-                  <TabPane tab="请求体" key="body">
-                    <Form.Item name="body">
-                      <Input.TextArea
-                        rows={8}
-                        placeholder="请求体 (JSON格式)"
-                        defaultValue={currentTest.body || ''}
-                        style={{ fontFamily: 'monospace' }}
-                      />
-                    </Form.Item>
-                  </TabPane>
-
-                  <TabPane tab="断言" key="assertions">
-                    <div className="space-y-2">
-                      <Button type="dashed" icon={<PlusOutlined />} block>
-                        添加断言
-                      </Button>
-                      {/* 这里可以添加断言配置组件 */}
-                    </div>
-                  </TabPane>
-                </Tabs>
+                <Tabs
+                  defaultActiveKey="headers"
+                  items={[
+                    {
+                      key: 'headers',
+                      label: '请求头',
+                      children: (
+                        <Form.Item name="headers">
+                          <Input.TextArea
+                            rows={8}
+                            placeholder="请求头 (JSON格式)"
+                            defaultValue={JSON.stringify(currentTest.headers || {}, null, 2)}
+                            style={{ fontFamily: 'monospace' }}
+                          />
+                        </Form.Item>
+                      )
+                    },
+                    {
+                      key: 'body',
+                      label: '请求体',
+                      children: (
+                        <Form.Item name="body">
+                          <Input.TextArea
+                            rows={8}
+                            placeholder="请求体 (JSON格式)"
+                            defaultValue={currentTest.body || ''}
+                            style={{ fontFamily: 'monospace' }}
+                          />
+                        </Form.Item>
+                      )
+                    },
+                    {
+                      key: 'assertions',
+                      label: '断言',
+                      children: (
+                        <div className="space-y-2">
+                          <Button type="dashed" icon={<PlusOutlined />} block>
+                            添加断言
+                          </Button>
+                          {/* 这里可以添加断言配置组件 */}
+                        </div>
+                      )
+                    }
+                  ]}
+                />
 
                 {/* 操作按钮 */}
                 <div className="flex justify-end space-x-2 mt-4">
@@ -348,25 +361,35 @@ const APITesting: React.FC = () => {
                     </Space>
                   </div>
 
-                  <Tabs defaultActiveKey="body">
-                    <TabPane tab="响应体" key="body">
-                      <Input.TextArea
-                        rows={12}
-                        value={JSON.stringify(response.data, null, 2)}
-                        readOnly
-                        style={{ fontFamily: 'monospace', backgroundColor: '#f5f5f5' }}
-                      />
-                    </TabPane>
-
-                    <TabPane tab="响应头" key="headers">
-                      <Input.TextArea
-                        rows={12}
-                        value={JSON.stringify(response.headers, null, 2)}
-                        readOnly
-                        style={{ fontFamily: 'monospace', backgroundColor: '#f5f5f5' }}
-                      />
-                    </TabPane>
-                  </Tabs>
+                  <Tabs
+                    defaultActiveKey="body"
+                    items={[
+                      {
+                        key: 'body',
+                        label: '响应体',
+                        children: (
+                          <Input.TextArea
+                            rows={12}
+                            value={JSON.stringify(response.data, null, 2)}
+                            readOnly
+                            style={{ fontFamily: 'monospace', backgroundColor: '#f5f5f5' }}
+                          />
+                        )
+                      },
+                      {
+                        key: 'headers',
+                        label: '响应头',
+                        children: (
+                          <Input.TextArea
+                            rows={12}
+                            value={JSON.stringify(response.headers, null, 2)}
+                            readOnly
+                            style={{ fontFamily: 'monospace', backgroundColor: '#f5f5f5' }}
+                          />
+                        )
+                      }
+                    ]}
+                  />
                 </div>
               )}
             </Card>

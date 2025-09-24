@@ -34,7 +34,7 @@ import LoadingSpinner from '@components/Common/LoadingSpinner'
 const { Title, Text } = Typography
 const { RangePicker } = DatePicker
 const { Option } = Select
-const { TabPane } = Tabs
+
 
 const TestReports: React.FC = () => {
   const [dateRange, setDateRange] = useState<[dayjs.Dayjs, dayjs.Dayjs]>([
@@ -462,8 +462,13 @@ const TestReports: React.FC = () => {
 
       {/* 详细数据标签页 */}
       <Card>
-        <Tabs defaultActiveKey="bugs">
-          <TabPane tab="重要缺陷" key="bugs">
+        <Tabs
+          defaultActiveKey="bugs"
+          items={[
+            {
+              key: 'bugs',
+              label: '重要缺陷',
+              children: (
             <List
               dataSource={reportData.topBugs}
               renderItem={(bug: any) => (
@@ -503,9 +508,12 @@ const TestReports: React.FC = () => {
                 </List.Item>
               )}
             />
-          </TabPane>
-          
-          <TabPane tab="模块详情" key="modules">
+              )
+            },
+            {
+              key: 'modules',
+              label: '模块详情',
+              children: (
             <Table
               dataSource={reportData.distribution.byModule}
               columns={[
@@ -556,8 +564,10 @@ const TestReports: React.FC = () => {
               ]}
               pagination={false}
             />
-          </TabPane>
-        </Tabs>
+              )
+            }
+          ]}
+        />
         </Card>
       </div>
     </div>

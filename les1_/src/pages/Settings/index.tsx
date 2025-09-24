@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Card,
   Row,
@@ -38,7 +38,7 @@ import LoadingSpinner from '@components/Common/LoadingSpinner'
 
 const { Title, Text } = Typography
 const { Option } = Select
-const { TabPane } = Tabs
+
 const { TextArea } = Input
 
 const Settings: React.FC = () => {
@@ -167,17 +167,18 @@ const Settings: React.FC = () => {
 
       {/* 内容区域 */}
       <div className="p-6">
-        <Tabs defaultActiveKey="profile">
-        {/* 个人信息 */}
-        <TabPane
-          tab={
-            <span>
-              <UserOutlined />
-              个人信息
-            </span>
-          }
-          key="profile"
-        >
+        <Tabs
+          defaultActiveKey="profile"
+          items={[
+            {
+              key: 'profile',
+              label: (
+                <span>
+                  <UserOutlined />
+                  个人信息
+                </span>
+              ),
+              children: (
           <Row gutter={[24, 24]}>
             <Col xs={24} lg={8}>
               <Card>
@@ -261,18 +262,17 @@ const Settings: React.FC = () => {
               </Card>
             </Col>
           </Row>
-        </TabPane>
-
-        {/* 系统设置 */}
-        <TabPane
-          tab={
-            <span>
-              <SettingOutlined />
-              系统设置
-            </span>
-          }
-          key="system"
-        >
+              )
+            },
+            {
+              key: 'system',
+              label: (
+                <span>
+                  <SettingOutlined />
+                  系统设置
+                </span>
+              ),
+              children: (
           <Row gutter={[24, 24]}>
             <Col xs={24} lg={12}>
               <Card title="界面设置">
@@ -353,18 +353,17 @@ const Settings: React.FC = () => {
               </Card>
             </Col>
           </Row>
-        </TabPane>
-
-        {/* 通知设置 */}
-        <TabPane
-          tab={
-            <span>
-              <NotificationOutlined />
-              通知设置
-            </span>
-          }
-          key="notifications"
-        >
+              )
+            },
+            {
+              key: 'notifications',
+              label: (
+                <span>
+                  <NotificationOutlined />
+                  通知设置
+                </span>
+              ),
+              children: (
           <Card title="通知偏好">
             <Form layout="vertical" onFinish={saveSystemSettings}>
               <div className="space-y-4">
@@ -418,18 +417,17 @@ const Settings: React.FC = () => {
               </Form.Item>
             </Form>
           </Card>
-        </TabPane>
-
-        {/* 环境配置 */}
-        <TabPane
-          tab={
-            <span>
-              <SecurityScanOutlined />
-              环境配置
-            </span>
-          }
-          key="environments"
-        >
+              )
+            },
+            {
+              key: 'environments',
+              label: (
+                <span>
+                  <SecurityScanOutlined />
+                  环境配置
+                </span>
+              ),
+              children: (
           <Card
             title="测试环境"
             extra={
@@ -487,18 +485,17 @@ const Settings: React.FC = () => {
               )}
             />
           </Card>
-        </TabPane>
-
-        {/* 安全设置 */}
-        <TabPane
-          tab={
-            <span>
-              <SecurityScanOutlined />
-              安全设置
-            </span>
-          }
-          key="security"
-        >
+              )
+            },
+            {
+              key: 'security',
+              label: (
+                <span>
+                  <SecurityScanOutlined />
+                  安全设置
+                </span>
+              ),
+              children: (
           <Row gutter={[24, 24]}>
             <Col xs={24} lg={12}>
               <Card title="密码设置">
@@ -599,8 +596,10 @@ const Settings: React.FC = () => {
               </Card>
             </Col>
           </Row>
-        </TabPane>
-        </Tabs>
+              )
+            }
+          ]}
+        />
       </div>
 
       {/* 环境配置模态框 */}
