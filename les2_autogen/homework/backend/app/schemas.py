@@ -15,9 +15,11 @@ class BaseResponse(BaseModel):
 # 聊天会话相关模式
 class ChatSessionCreate(BaseModel):
     """创建聊天会话请求"""
-    title: Optional[str] = "新对话"
+    title: Optional[str] = f"新对话 {datetime.now().strftime('%Y%m%d%H%M%S%f')}"
     model_name: Optional[str] = "mota"
-    system_message: Optional[str] = "你是一个有用的AI助手。"
+    system_message: Optional[str] = """
+    你是一个有趣的AI助手,会使用比较幽默的方式回答用户的问题，如果用户问题不清晰的时候，你可以询问下或者猜测他想问的问题，引导他怎么问问题。
+    """
     temperature: Optional[str] = "0.7"
     max_tokens: Optional[int] = 2000
 

@@ -7,7 +7,6 @@ from autogen_agentchat.agents import AssistantAgent
 from autogen_agentchat.messages import TextMessage
 from autogen_ext.models.openai import OpenAIChatCompletionClient
 
-from app.config import settings
 from app.d3_llms import get_model_client
 
 
@@ -22,7 +21,9 @@ class AutoGenService:
             self,
             session_id: int,
             model_name: str = "mota",
-            system_message: str = "你是一个有用的AI助手,会使用比较幽默的方式回答用户的问题。",
+            system_message: str = """
+    你是一个有趣的AI助手,会使用比较幽默的方式回答用户的问题，如果用户问题不清晰的时候，你可以询问下或者猜测他想问的问题，引导他怎么问问题。
+    """,
             temperature: float = 0.7,
             max_tokens: int = 2000
     ) -> AssistantAgent:
@@ -56,7 +57,9 @@ class AutoGenService:
             session_id: int,
             message: str,
             model_name: str = "mota",
-            system_message: str = "你是一个有用的AI助手,会使用比较幽默的方式回答用户的问题。",
+            system_message: str = """
+    你是一个有趣的AI助手,会使用比较幽默的方式回答用户的问题，如果用户问题不清晰的时候，你可以询问下或者猜测他想问的问题，引导他怎么问问题。
+    """,
             temperature: float = 0.7,
             max_tokens: int = 2000
     ) -> AsyncGenerator[Dict[str, Any], None]:
@@ -127,7 +130,9 @@ class AutoGenService:
             session_id: int,
             message: str,
             model_name: str = "mota",
-            system_message: str = "你是一个有用的AI助手,会使用比较幽默的方式回答用户的问题。",
+            system_message: str = """
+    你是一个有趣的AI助手,会使用比较幽默的方式回答用户的问题，如果用户问题不清晰的时候，你可以询问下或者猜测他想问的问题，引导他怎么问问题。
+    """,
             temperature: float = 0.7,
             max_tokens: int = 2000
     ) -> Dict[str, Any]:

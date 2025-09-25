@@ -5,20 +5,19 @@ from autogen_core.models import ModelFamily
 from autogen_ext.models.openai import OpenAIChatCompletionClient
 import dotenv
 
-from app.config import settings
-
 # 加载环境变量
 dotenv.load_dotenv(r"E:\BaiduSyncdisk\.env")
 
 # 支持的模型名称
-names = ["zhipu", "hug", "bailian", "huoshan", "mota", "xunfei", "gemini", "router", "qik", "moli", "guiji", "deepseek", "openai"]
+names = ["zhipu", "hug", "bailian", "huoshan", "mota", "xunfei", "gemini", "router", "qik", "moli", "guiji", "deepseek",
+         "openai"]
 
 
 def get_model_client(
-    llm_name: str = "mota",
-    temperature: Optional[float] = None,
-    max_tokens: Optional[int] = None,
-    model_client_stream: bool = True
+        llm_name: str = "mota",
+        temperature: Optional[float] = None,
+        max_tokens: Optional[int] = None,
+        model_client_stream: bool = True
 ) -> OpenAIChatCompletionClient:
     """
     获取模型客户端
@@ -36,17 +35,10 @@ def get_model_client(
     if llm_name not in names:
         llm_name = "mota"
 
-    # 优先使用环境变量中的配置，如果没有则使用settings中的配置
-    if llm_name == "openai" or not os.getenv(f'model_{llm_name}'):
-        # 使用OpenAI配置
-        model = os.getenv(f'model_mota')
-        base_url = os.getenv(f'base_url_mota')
-        api_key = os.getenv(f'api_key_mota')
-    else:
-        # 使用其他模型配置
-        model = os.getenv(f'model_{llm_name}')
-        base_url = os.getenv(f'base_url_{llm_name}')
-        api_key = os.getenv(f'api_key_{llm_name}')
+    # 使用其他模型配置
+    model = os.getenv(f'model_{llm_name}')
+    base_url = os.getenv(f'base_url_{llm_name}')
+    api_key = os.getenv(f'api_key_{llm_name}')
 
     # 构建客户端参数
     client_kwargs = {

@@ -7,20 +7,26 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 
-from app.config import settings
+# 数据库配置
+DATABASE_URL: str = "sqlite:///./chat_system.db"
+
+# 应用程序配置
+APP_HOST: str = "0.0.0.0"
+APP_PORT: int = 8000
+DEBUG: bool = True
 
 # 创建数据库引擎
-if settings.DATABASE_URL.startswith("sqlite"):
+if DATABASE_URL.startswith("sqlite"):
     # SQLite配置
-    SQLALCHEMY_DATABASE_URL = settings.DATABASE_URL
+    SQLALCHEMY_DATABASE_URL = DATABASE_URL
     engine = create_engine(
         SQLALCHEMY_DATABASE_URL, 
         connect_args={"check_same_thread": False},
-        echo=settings.DEBUG
+        echo=DEBUG
     )
 else:
     # 其他数据库配置
-    engine = create_engine(settings.DATABASE_URL, echo=settings.DEBUG)
+    engine = create_engine(DATABASE_URL, echo=DEBUG)
 
 # 创建会话工厂
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
