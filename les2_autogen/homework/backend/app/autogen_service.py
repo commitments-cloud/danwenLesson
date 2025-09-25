@@ -1,14 +1,17 @@
 """
 AutoGen服务模块
 """
-import asyncio
-from typing import AsyncGenerator, Dict, Any, Optional
+from typing import AsyncGenerator, Dict, Any
 from autogen_agentchat.agents import AssistantAgent
-from autogen_agentchat.messages import TextMessage
 from autogen_ext.models.openai import OpenAIChatCompletionClient
 
-from app.d3_llms import get_model_client
+from common.llms import get_model_client
+from common.log import DycLogger
 
+logger = DycLogger().get_logger()
+
+
+# Logger.log() missing 1 required positional argument: 'msg'
 
 class AutoGenService:
     """AutoGen对话服务"""
@@ -49,7 +52,6 @@ class AutoGenService:
 
             self.agents[agent_key] = agent
             self.model_clients[agent_key] = model_client
-
         return self.agents[agent_key]
 
     async def chat_stream(
@@ -63,6 +65,7 @@ class AutoGenService:
             temperature: float = 0.7,
             max_tokens: int = 2000
     ) -> AsyncGenerator[Dict[str, Any], None]:
+        logger.info(f"会话id: {session_id},用户问题: {message},模型提供商: {model_name}")
         """流式聊天"""
         try:
             # 获取或创建代理
@@ -73,6 +76,7 @@ class AutoGenService:
                 temperature=temperature,
                 max_tokens=max_tokens
             )
+            logger.info("智能体创建成功，开始对话...")
 
             # 发送消息并获取流式响应
             response_content = ""
@@ -103,6 +107,7 @@ class AutoGenService:
                         if hasattr(event, 'messages') and event.messages:
                             last_message = event.messages[-1]
                             if hasattr(last_message, 'content'):
+                                logger.info(f"最终完整消息: {last_message.content}")
                                 yield {
                                     "type": "complete",
                                     "content": last_message.content,
@@ -112,6 +117,7 @@ class AutoGenService:
 
             # 如果没有收到完成信号，发送最后的内容
             if response_content:
+                logger.info(f"最终完整消息: {response_content}")
                 yield {
                     "type": "complete",
                     "content": response_content,
@@ -119,6 +125,7 @@ class AutoGenService:
                 }
 
         except Exception as e:
+            logger.error(f"对话过程中发生错误: {str(e)}")
             yield {
                 "type": "error",
                 "content": f"对话过程中发生错误: {str(e)}",
@@ -136,6 +143,8 @@ class AutoGenService:
             temperature: float = 0.7,
             max_tokens: int = 2000
     ) -> Dict[str, Any]:
+        logger.info("会话id: {session_id},用户问题: {message},模型提供商: {model_name}")
+
         """简单聊天（非流式）"""
         try:
             # 获取或创建代理
@@ -152,12 +161,15 @@ class AutoGenService:
 
             if result.messages:
                 last_message = result.messages[-1]
+                logger.info(f"最终完整消息: {last_message.content}")
+
                 return {
                     "success": True,
                     "content": last_message.content,
                     "usage": getattr(last_message, 'models_usage', None)
                 }
             else:
+                logger.info(f"未收到有效响应")
                 return {
                     "success": False,
                     "content": "未收到有效响应",
@@ -165,6 +177,7 @@ class AutoGenService:
                 }
 
         except Exception as e:
+            logger.error(f"对话过程中发生错误: {str(e)}")
             return {
                 "success": False,
                 "content": f"对话过程中发生错误: {str(e)}",
@@ -174,6 +187,7 @@ class AutoGenService:
     async def clear_session(self, session_id: int):
         """清除会话"""
         agent_key = f"session_{session_id}"
+        logger.info(f"清除会话: {agent_key}")
 
         if agent_key in self.agents:
             # 关闭模型客户端
