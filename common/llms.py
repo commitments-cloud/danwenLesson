@@ -1,6 +1,8 @@
+import asyncio
 import os
 from typing import Optional
 
+from autogen_agentchat.agents import AssistantAgent
 from autogen_core.models import ModelFamily
 from autogen_ext.models.openai import OpenAIChatCompletionClient
 import dotenv
@@ -9,7 +11,7 @@ import dotenv
 dotenv.load_dotenv(r"E:\BaiduSyncdisk\.env")
 
 # 支持的模型名称
-names = ["zhipu", "hug", "bailian", "huoshan", "mota", "xunfei", "gemini", "router", "qik", "moli", "guiji", "deepseek",
+names = ["zhipu", "hug","gf", "bailian", "huoshan", "mota", "xunfei", "gemini", "router", "qik", "moli", "guiji", "deepseek",
          "openai"]
 
 
@@ -65,4 +67,27 @@ def get_model_client(
 
 
 # 默认模型客户端（单例模式）
-default_model_client = get_model_client()
+default_model_client = get_model_client("gf")
+
+if __name__ == '__main__':
+    default_model_client = get_model_client("gf")
+
+    agent = AssistantAgent(
+        name="reporter_agent",
+        model_client=default_model_client,
+        system_message="你擅长编写古诗",
+        model_client_stream=True,  # 支持流式输出
+    )
+
+
+    async def main():
+        result = await agent.run(task="编写一首5言古诗")  # 等待run方法执行完成后返回结果
+        # print(type(result), result)
+        # 结果是一个TaskResult的对象 message = [TextMessage-用户的问题,TextMessage-回答的问题]
+        # TextMessage（id,source,models_usage,metadata,created_at,content,type）
+
+        print(result.messages[1].content)
+
+
+    asyncio.run(main())
+

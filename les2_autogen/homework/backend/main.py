@@ -55,16 +55,10 @@ async def health_check():
 
 if __name__ == "__main__":
     import uvicorn
-
-    # 应用程序配置
-    APP_HOST: str = "0.0.0.0"
-    APP_PORT: int = 8000
-    DEBUG: bool = True
-
     uvicorn.run(
         "main:app",
-        host=APP_HOST,
-        port=APP_PORT,
-        reload=DEBUG,
+        host="0.0.0.0",
+        port=8000,
+        reload=True,
         log_level="info"
     )

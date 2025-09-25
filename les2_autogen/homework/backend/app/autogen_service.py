@@ -11,8 +11,6 @@ from common.log import DycLogger
 logger = DycLogger().get_logger()
 
 
-# Logger.log() missing 1 required positional argument: 'msg'
-
 class AutoGenService:
     """AutoGen对话服务"""
 
@@ -23,7 +21,7 @@ class AutoGenService:
     async def get_or_create_agent(
             self,
             session_id: int,
-            model_name: str = "mota",
+            model_name: str = "gf",
             system_message: str = """
     你是一个有趣的AI助手,会使用比较幽默的方式回答用户的问题，如果用户问题不清晰的时候，你可以询问下或者猜测他想问的问题，引导他怎么问问题。
     """,
@@ -58,7 +56,7 @@ class AutoGenService:
             self,
             session_id: int,
             message: str,
-            model_name: str = "mota",
+            model_name: str = "gf",
             system_message: str = """
     你是一个有趣的AI助手,会使用比较幽默的方式回答用户的问题，如果用户问题不清晰的时候，你可以询问下或者猜测他想问的问题，引导他怎么问问题。
     """,
@@ -82,6 +80,9 @@ class AutoGenService:
             response_content = ""
 
             # 使用AutoGen进行对话
+            final_content = ""
+            has_completed = False
+
             async for event in agent.run_stream(task=message):
                 if hasattr(event, 'content'):
                     if hasattr(event, 'type'):
@@ -89,16 +90,20 @@ class AutoGenService:
                             # 流式内容块
                             chunk_content = event.content
                             response_content += chunk_content
+                            logger.debug(f"收到流式块，长度: {len(chunk_content)}, 累积长度: {len(response_content)}")
                             yield {
                                 "type": "chunk",
                                 "content": chunk_content,
                                 "full_content": response_content
                             }
                         elif event.type == 'TextMessage' and hasattr(event, 'source') and event.source == 'assistant':
-                            # 最终完整消息
+                            # 最终完整消息 - 优先使用TextMessage的内容，但如果为空则使用累积内容
+                            final_content = event.content if event.content.strip() else response_content
+                            has_completed = True
+                            logger.info(f"收到TextMessage完整消息，长度: {len(final_content)}")
                             yield {
                                 "type": "complete",
-                                "content": event.content,
+                                "content": final_content,
                                 "usage": getattr(event, 'models_usage', None)
                             }
                             return
@@ -107,17 +112,20 @@ class AutoGenService:
                         if hasattr(event, 'messages') and event.messages:
                             last_message = event.messages[-1]
                             if hasattr(last_message, 'content'):
-                                logger.info(f"最终完整消息: {last_message.content}")
+                                # 优先使用TaskResult的内容，但如果为空则使用累积内容
+                                final_content = last_message.content if last_message.content.strip() else response_content
+                                has_completed = True
+                                logger.info(f"收到TaskResult完整消息，长度: {len(final_content)}")
                                 yield {
                                     "type": "complete",
-                                    "content": last_message.content,
+                                    "content": final_content,
                                     "usage": getattr(last_message, 'models_usage', None)
                                 }
                                 return
 
-            # 如果没有收到完成信号，发送最后的内容
-            if response_content:
-                logger.info(f"最终完整消息: {response_content}")
+            # 如果没有收到完成信号，发送流式累积的内容
+            if not has_completed and response_content:
+                logger.info(f"使用流式累积内容作为最终消息: {response_content}")
                 yield {
                     "type": "complete",
                     "content": response_content,
@@ -136,14 +144,14 @@ class AutoGenService:
             self,
             session_id: int,
             message: str,
-            model_name: str = "mota",
+            model_name: str = "gf",
             system_message: str = """
     你是一个有趣的AI助手,会使用比较幽默的方式回答用户的问题，如果用户问题不清晰的时候，你可以询问下或者猜测他想问的问题，引导他怎么问问题。
     """,
             temperature: float = 0.7,
             max_tokens: int = 2000
     ) -> Dict[str, Any]:
-        logger.info("会话id: {session_id},用户问题: {message},模型提供商: {model_name}")
+        logger.info(f"会话id: {session_id},用户问题: {message},模型提供商: {model_name}")
 
         """简单聊天（非流式）"""
         try:

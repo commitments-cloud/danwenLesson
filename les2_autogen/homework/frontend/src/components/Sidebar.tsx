@@ -271,6 +271,8 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onCollapse }) => {
               {filteredSessions.length > 0 ? (
                 <List
                   dataSource={filteredSessions}
+                  split={false}
+                  size="small"
                   renderItem={(session) => (
                     <List.Item
                       className={`session-item ${

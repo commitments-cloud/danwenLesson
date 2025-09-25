@@ -33,15 +33,11 @@ const ChatInput: React.FC<ChatInputProps> = ({
   // 发送消息
   const handleSend = () => {
     if (!canSend) return
-    
+
     const trimmedMessage = message.trim()
     if (trimmedMessage) {
       onSend(trimmedMessage)
       setMessage('')
-      // 重置文本框高度
-      if (textAreaRef.current) {
-        textAreaRef.current.resizableTextArea.textArea.style.height = 'auto'
-      }
     }
   }
 
@@ -80,11 +76,12 @@ const ChatInput: React.FC<ChatInputProps> = ({
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
-          autoSize={{ minRows: 1, maxRows: 6 }}
+          autoSize={false}
           disabled={disabled}
           className="chat-textarea"
+          rows={2}
         />
-        
+
         <div className="chat-input-actions">
           {canStop ? (
             <Tooltip title="停止生成 (Esc)">
@@ -109,15 +106,15 @@ const ChatInput: React.FC<ChatInputProps> = ({
             </Tooltip>
           )}
         </div>
+
+        {isLoading && (
+          <div className="chat-input-status">
+            <span className="status-text">
+              {status === 'waiting' ? 'AI正在思考...' : 'AI正在回复...'}
+            </span>
+          </div>
+        )}
       </div>
-      
-      {isLoading && (
-        <div className="chat-input-status">
-          <span className="status-text">
-            {status === 'waiting' ? 'AI正在思考...' : 'AI正在回复...'}
-          </span>
-        </div>
-      )}
     </div>
   )
 }

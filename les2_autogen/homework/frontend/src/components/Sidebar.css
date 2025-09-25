@@ -1,11 +1,11 @@
 .chat-sidebar {
   height: 100vh;
   overflow: hidden;
-  background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border-right: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(0, 255, 255, 0.3);
+  box-shadow: 2px 0 20px rgba(0, 255, 255, 0.1);
   display: flex;
   flex-direction: column;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -17,14 +17,14 @@
 }
 
 .new-chat-button {
-  background: linear-gradient(135deg, #1677ff 0%, #4096ff 100%);
+  background: linear-gradient(135deg, #00ffff 0%, #0080ff 100%);
   border: none;
   border-radius: 10px;
-  color: white;
+  color: #0f0f23;
   font-weight: 600;
   height: 44px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 12px rgba(22, 119, 255, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 255, 255, 0.4);
   letter-spacing: 0.5px;
   display: flex;
   align-items: center;
@@ -98,7 +98,9 @@
 .sidebar-content {
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 12px 0;
+  max-height: calc(100vh - 200px); /* 确保有足够的滚动空间 */
 }
 
 .session-item {
@@ -140,9 +142,9 @@
 }
 
 .session-item.active {
-  background: linear-gradient(90deg, rgba(22, 119, 255, 0.3) 0%, rgba(22, 119, 255, 0.2) 100%);
-  border: 1px solid rgba(22, 119, 255, 0.4);
-  box-shadow: 0 4px 16px rgba(22, 119, 255, 0.2);
+  background: linear-gradient(90deg, rgba(0, 255, 255, 0.3) 0%, rgba(0, 128, 255, 0.2) 100%);
+  border: 1px solid rgba(0, 255, 255, 0.5);
+  box-shadow: 0 4px 16px rgba(0, 255, 255, 0.3);
 }
 
 .session-item.active:hover {
@@ -215,22 +217,28 @@
 
 /* 滚动条样式 */
 .sidebar-content::-webkit-scrollbar {
-  width: 6px;
+  width: 1px;
 }
 
 .sidebar-content::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 1px;
+  margin: 4px 0;
 }
 
 .sidebar-content::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 3px;
+  background: rgba(0, 255, 255, 0.4);
+  border-radius: 1px;
   transition: background 0.3s;
+  min-height: 20px;
 }
 
 .sidebar-content::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.45);
+  background: rgba(0, 255, 255, 0.6);
+}
+
+.sidebar-content::-webkit-scrollbar-thumb:active {
+  background: rgba(0, 255, 255, 0.8);
 }
 
 /* 空状态样式 */
